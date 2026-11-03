@@ -12,6 +12,10 @@ A personal portfolio powered by a Spring Boot REST API and MySQL, with a hand-bu
 
 <br>
 
+<a href="https://turki-alghamdi.up.railway.app"><img src="https://img.shields.io/badge/🌐_Live_Site-turki--alghamdi.up.railway.app-22D3EE?style=for-the-badge" alt="Live site"></a>
+
+<br><br>
+
 <a href="https://www.linkedin.com/in/turki-abdullah-alghamdi"><img src="https://img.shields.io/badge/LinkedIn-Turki_Alghamdi-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
 <a href="mailto:kfupm.turki@gmail.com"><img src="https://img.shields.io/badge/Email-kfupm.turki-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"></a>
 <a href="src/main/resources/static/files/Turki_Alghamdi_CV.pdf"><img src="https://img.shields.io/badge/📄_Download-CV-4F46E5?style=for-the-badge" alt="CV"></a>
