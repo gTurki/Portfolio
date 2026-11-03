@@ -111,6 +111,8 @@ The projects shown on the site, all built with Spring Boot during the Tuwaiq Aca
 - **Two layers of validation**: instant checks in the browser, then Bean Validation on the server (`@NotBlank`, `@Email`, `@Size`).
 - **Field-level errors**: the API returns one message per field, and the form shows each one under its input.
 - **Honeypot spam trap**: a hidden field only bots fill in. Bot messages get a normal "thanks" but are never saved, so they don't retry.
+- **Rate limit**: at most **3 messages per 10 minutes** per visitor (sliding window, by IP). Extra attempts get `429 Too Many Requests` with a `Retry-After` header and a friendly message. Configurable with `CONTACT_RATE_LIMIT_MAX` / `CONTACT_RATE_LIMIT_WINDOW`.
+- **Email notifications**: every new message is emailed to me via Brevo (see [below](#-email-notifications-brevo)).
 
 ### 🎨 Frontend
 - Dark theme, **typing hero**, **scroll-spy** navigation, reveal-on-scroll animations, loading skeletons.
