@@ -116,9 +116,39 @@
 
     // ---------------- Profile photo fallback ----------------
     const photo = $("#profilePhoto");
-    const markNoPhoto = () => photo.closest(".about__photo").classList.add("no-photo");
+    const markNoPhoto = () => photo.closest(".hero__photo").classList.add("no-photo");
     photo.addEventListener("error", markNoPhoto);
     if (photo.complete && photo.naturalWidth === 0) markNoPhoto();
+
+    // ---------------- Toast + copy email ----------------
+    const toast = $("#toast");
+    let toastTimer = null;
+    function showToast(text) {
+        toast.textContent = text;
+        toast.classList.add("is-visible");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("is-visible"), 2600);
+    }
+
+    const copyBtn = $("#copyEmail");
+    copyBtn.addEventListener("click", async () => {
+        const email = copyBtn.dataset.email;
+        try {
+            await navigator.clipboard.writeText(email);
+            showToast(t("copied"));
+        } catch {
+            // Clipboard API unavailable (http, old browser, permissions): fall back to a hidden textarea
+            const ta = document.createElement("textarea");
+            ta.value = email;
+            ta.setAttribute("readonly", "");
+            ta.style.cssText = "position:fixed;opacity:0;pointer-events:none";
+            document.body.appendChild(ta);
+            ta.select();
+            const ok = document.execCommand && document.execCommand("copy");
+            ta.remove();
+            showToast(t(ok ? "copied" : "copyFailed"));
+        }
+    });
 
     // ---------------- Reveal on scroll ----------------
     const revealObserver = "IntersectionObserver" in window && !reducedMotion

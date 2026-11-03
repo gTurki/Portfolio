@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title data-i18n="meta.title">Turki Alghamdi | Software Engineer</title>
     <meta name="description" data-i18n-attr="content:meta.description" content="Portfolio of Turki Alghamdi, software engineer and Java / Spring Boot backend developer based in Riyadh.">
+    <meta name="theme-color" content="#0f0e1a">
     <script>
         // Apply the saved language before first paint to avoid a flash of the wrong direction.
         (function () {
@@ -15,7 +16,7 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -23,18 +24,18 @@
 <!-- ================= NAV ================= -->
 <header class="nav" id="nav">
     <div class="container nav__inner">
-        <a href="#hero" class="nav__brand" dir="ltr">@TA</a>
+        <a href="#hero" class="nav__brand"><span data-i18n="nav.brand">Turki</span><span class="nav__dot" aria-hidden="true"></span></a>
         <nav class="nav__links" id="navLinks">
             <a href="#hero" data-spy="hero" data-i18n="nav.home">Home</a>
-            <a href="#about" data-spy="about" data-i18n="nav.about">About</a>
+            <a href="#about" data-spy="about" data-i18n="nav.about">Profile</a>
             <a href="#projects" data-spy="projects" data-i18n="nav.projects">Projects</a>
-            <a href="#skills" data-spy="skills" data-i18n="nav.skills">Tech Stack</a>
+            <a href="#skills" data-spy="skills" data-i18n="nav.skills">Stack</a>
             <a href="#certifications" data-spy="certifications" data-i18n="nav.certs">Certifications</a>
-            <a href="#contact" class="btn btn--primary btn--sm" data-i18n="nav.contact">Contact Me</a>
+            <a href="#contact" data-spy="contact" data-i18n="nav.contact">Contact</a>
         </nav>
         <div class="nav__end">
             <button class="lang-btn" type="button" id="langToggle" aria-label="Switch to Arabic">
-                <img src="img/flags/sa.svg" alt="" width="24" height="18" id="langFlag">
+                <img src="img/flags/sa.svg" alt="" width="22" height="16" id="langFlag">
                 <span id="langLabel" lang="ar">العربية</span>
             </button>
             <button class="nav__toggle" aria-expanded="false" id="navToggle" data-i18n-attr="aria-label:nav.menu" aria-label="Toggle menu">
@@ -47,78 +48,155 @@
 <main>
     <!-- ================= HERO ================= -->
     <section class="hero" id="hero">
-        <div class="hero__bg" aria-hidden="true">
-            <div class="glow glow--a"></div>
-            <div class="glow glow--b"></div>
-            <div class="grid-pattern"></div>
-        </div>
+        <div class="hero__grid" aria-hidden="true"></div>
+        <div class="hero__glow" aria-hidden="true"></div>
         <div class="container hero__inner">
-            <p class="hero__kicker mono" data-i18n="hero.kicker">Hello, I'm</p>
-            <h1 class="hero__name" data-i18n="hero.name">Turki Alghamdi</h1>
-            <p class="hero__typed" aria-live="polite">
-                <span id="typed">Building secure, scalable backends</span><span class="caret" aria-hidden="true"></span>
-            </p>
-            <p class="hero__bio" data-i18n="hero.bio">
-                Software engineer specializing in Java and Spring Boot. I build secure REST APIs, real-time
-                systems and AI-integrated backends, and I lead teams from requirements to working delivery.
-            </p>
-            <div class="hero__actions">
-                <a href="#projects" class="btn btn--primary">
-                    <span data-i18n="hero.work">View My Work</span>
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-                </a>
-                <a href="#contact" class="btn btn--outline" data-i18n="hero.contact">Get In Touch</a>
+            <div class="hero__text">
+                <p class="hero__role" data-i18n="hero.role">Backend Developer</p>
+                <h1 class="hero__title">
+                    <span class="hero__hello" data-i18n="hero.hello">Hello I'm</span>
+                    <span class="hero__name accent" data-i18n="hero.first">Turki</span>
+                    <span class="hero__name accent" data-i18n="hero.last">Alghamdi</span>
+                </h1>
+                <p class="hero__tagline" data-i18n="hero.tagline">Java &amp; Spring Boot | Secure APIs, Real-time &amp; AI | Riyadh</p>
+                <p class="hero__typed" aria-live="polite" dir="auto">
+                    <span class="hero__prompt" aria-hidden="true">&gt;</span>
+                    <span id="typed">Building secure, scalable backends</span><span class="caret" aria-hidden="true"></span>
+                </p>
+                <div class="hero__actions">
+                    <a href="files/Turki_Alghamdi_CV.pdf" class="btn btn--outline" download>
+                        <span data-i18n="hero.cv">View CV</span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="flip-rtl"><path d="m9 6 6 6-6 6"/></svg>
+                    </a>
+                    <div class="socials">
+                        <a href="https://github.com/gTurki" target="_blank" rel="noopener" aria-label="GitHub" class="social">
+                            <svg viewBox="0 0 24 24" class="icon-fill"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/turki-abdullah-alghamdi" target="_blank" rel="noopener" aria-label="LinkedIn" class="social">
+                            <svg viewBox="0 0 24 24" class="icon-fill"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+                        </a>
+                        <a href="mailto:kfupm.turki@gmail.com" aria-label="Email" class="social">
+                            <svg viewBox="0 0 24 24" class="icon-stroke"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="hero__social">
-                <a href="https://github.com/gTurki" target="_blank" rel="noopener" aria-label="GitHub">
-                    <svg viewBox="0 0 24 24" class="icon-fill"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
-                </a>
-                <a href="https://www.linkedin.com/in/turki-abdullah-alghamdi" target="_blank" rel="noopener" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" class="icon-fill"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
-                </a>
-                <a href="mailto:kfupm.turki@gmail.com" aria-label="Email">
-                    <svg viewBox="0 0 24 24" class="icon-stroke"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-                </a>
+
+            <div class="hero__photo" id="heroPhoto">
+                <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+                    <circle class="ring__outer" cx="100" cy="100" r="96"/>
+                    <circle class="ring__inner" cx="100" cy="100" r="90"/>
+                </svg>
+                <img src="files/profile.jpg" alt="Turki Alghamdi" data-i18n-attr="alt:hero.name" id="profilePhoto">
+                <div class="hero__initials" aria-hidden="true">TA</div>
             </div>
         </div>
-        <a href="#about" class="hero__scroll" data-i18n-attr="aria-label:hero.scroll" aria-label="Scroll to About">
-            <svg viewBox="0 0 24 24" class="icon-stroke"><path d="M12 5v14m0 0-6-6m6 6 6-6"/></svg>
-        </a>
     </section>
 
-    <!-- ================= ABOUT ================= -->
-    <section class="section" id="about">
-        <div class="container about">
-            <div class="about__photo reveal">
-                <div class="about__glow" aria-hidden="true"></div>
-                <img src="files/profile.jpg" alt="Turki Alghamdi" data-i18n-attr="alt:hero.name" id="profilePhoto">
-                <div class="about__initials" aria-hidden="true">TA</div>
+    <!-- ================= STATS ================= -->
+    <section class="stats-section" aria-label="Highlights" data-i18n-attr="aria-label:stats.label">
+        <div class="container stats">
+            <div class="stat reveal"><strong data-i18n="stats.s1.value">3rd</strong><span data-i18n="stats.s1.label">Expo 2030 Riyadh Hackathon</span></div>
+            <div class="stat reveal"><strong>5</strong><span data-i18n="stats.s2.label">Spring Boot API projects</span></div>
+            <div class="stat reveal"><strong>300</strong><span data-i18n="stats.s3.label">Bootcamp hours</span></div>
+            <div class="stat reveal"><strong>4</strong><span data-i18n="stats.s4.label">Certifications &amp; accreditations</span></div>
+        </div>
+    </section>
+
+    <!-- ================= EDUCATION ================= -->
+    <section class="section" id="education">
+        <div class="container">
+            <h2 class="section-title section-title--icon reveal">
+                <svg viewBox="0 0 24 24" class="icon-stroke title-icon" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/><path d="M22 10v6"/></svg>
+                <span data-i18n="edu.title">Education</span>
+            </h2>
+            <div class="edu">
+                <article class="edu-card reveal">
+                    <h3 data-i18n="edu.e1.title">B.Sc. in Software Engineering</h3>
+                    <p class="edu-card__date" data-i18n="edu.e1.date">Graduated May 2026</p>
+                    <p class="edu-card__place" data-i18n="edu.e1.place">King Fahd University of Petroleum &amp; Minerals (KFUPM) · Dhahran</p>
+                    <svg viewBox="0 0 24 24" class="icon-stroke edu-card__icon" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+                </article>
+                <article class="edu-card reveal">
+                    <h3 data-i18n="edu.e2.title">Java Web Development &amp; AI Bootcamp</h3>
+                    <p class="edu-card__date" data-i18n="edu.e2.date">Aug – Oct 2026 · 300 hours</p>
+                    <p class="edu-card__place" data-i18n="edu.e2.place">Tuwaiq Academy x Misk Foundation · Riyadh · Team leader on 2 projects</p>
+                    <svg viewBox="0 0 24 24" class="icon-stroke edu-card__icon" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg>
+                </article>
             </div>
-            <div class="about__text reveal">
-                <p class="eyebrow mono" data-i18n="about.eyebrow">About me</p>
-                <h2 class="section-title section-title--left" data-i18n-html="about.title">From requirements to <span class="grad">delivery</span></h2>
-                <p data-i18n="about.p1">
-                    I'm a Software Engineering graduate from KFUPM focused on the Java ecosystem: Spring Boot,
-                    Spring Security, JPA/Hibernate and MySQL. I've shipped Spring Boot products that integrate OpenAI,
-                    Gemini, Google Maps, Gmail SMTP, Telegram Bot and WhatsApp APIs.
-                </p>
-                <p data-i18n="about.p2">
-                    In the 300-hour Tuwaiq Academy x Misk bootcamp I went from CRUD APIs to production-style systems
-                    with JWT security, WebSockets, concurrency control, AI fallbacks and Docker deployment, and led two
-                    of its full-stack projects as team leader.
-                </p>
-                <ul class="stats">
-                    <li><strong data-i18n="about.stat1.value">3rd</strong><span data-i18n="about.stat1.label">Expo 2030 Riyadh Hackathon</span></li>
-                    <li><strong>5</strong><span data-i18n="about.stat2.label">Spring Boot API projects</span></li>
-                    <li><strong data-i18n="about.stat3.value">300h</strong><span data-i18n="about.stat3.label">Java &amp; AI bootcamp</span></li>
-                </ul>
-                <div class="about__actions">
-                    <a href="#contact" class="btn btn--primary" data-i18n="about.talk">Let's Talk</a>
-                    <a href="files/Turki_Alghamdi_CV.pdf" class="btn btn--outline" download>
-                        <span data-i18n="about.cv">Download CV</span>
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
-                    </a>
-                </div>
+        </div>
+    </section>
+
+    <!-- ================= SHORT PROFILE (bento) ================= -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title reveal" data-i18n="profile.title">Short Profile</h2>
+            <div class="bento">
+                <!-- 1. Main -->
+                <article class="tile tile--main reveal">
+                    <div class="terminal" dir="ltr" aria-hidden="true">
+                        <div class="terminal__bar"><i></i><i></i><i></i><span>turki@portfolio ~</span></div>
+<pre class="terminal__body"><span class="t-dim">$</span> curl -X POST /api/contact \
+    -d '{"message":"Hi Turki!"}'
+<span class="t-ok">HTTP/1.1 201 Created</span>
+{
+  <span class="t-key">"status"</span>: <span class="t-str">"received"</span>,
+  <span class="t-key">"emailed"</span>: <span class="t-str">true</span>
+}</pre>
+                    </div>
+                    <h3 class="tile__headline" data-i18n="profile.b1">Backend engineer building secure, AI-integrated Spring Boot systems</h3>
+                </article>
+
+                <!-- 2. Languages -->
+                <article class="tile tile--langs reveal">
+                    <div class="langs-cloud" aria-hidden="true">
+                        <span lang="ar">مرحبًا</span><span>Hello</span><span lang="ar">أهلًا</span><span>Hi</span>
+                        <span lang="ar">السلام</span><span>Welcome</span><span lang="ar">هلا</span>
+                    </div>
+                    <h3 class="tile__headline" data-i18n="profile.b2">Fluent in Arabic and English</h3>
+                </article>
+
+                <!-- 3. Stack -->
+                <article class="tile tile--stack reveal">
+                    <div class="nodes" dir="ltr" aria-hidden="true">
+                        <span>Spring Security</span><span>JPA</span><span>MySQL</span><span>Docker</span>
+                    </div>
+                    <p class="tile__eyebrow" data-i18n="profile.b3.small">My primary tech stack</p>
+                    <h3 class="tile__headline" dir="ltr">Java, Spring Boot</h3>
+                </article>
+
+                <!-- 4. Certified -->
+                <article class="tile tile--cert reveal">
+                    <div class="hex" aria-hidden="true"><span>SCE</span><small>CERTIFIED</small></div>
+                    <h3 class="tile__headline" data-i18n="profile.b4">Certified Software Engineer &amp; Project Manager</h3>
+                </article>
+
+                <!-- 5. Copy email -->
+                <article class="tile tile--ask reveal">
+                    <h3 class="tile__headline" data-i18n="profile.b5">Do you want to ask a question?</h3>
+                    <button class="copy-btn" type="button" id="copyEmail" data-email="kfupm.turki@gmail.com">
+                        <svg viewBox="0 0 24 24" class="icon-stroke" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                        <span id="copyLabel" data-i18n="profile.b5.btn">Copy my email address</span>
+                    </button>
+                </article>
+
+                <!-- 6. Inside scoop -->
+                <article class="tile tile--scoop reveal">
+                    <div class="code" dir="ltr" aria-hidden="true">
+<pre><span class="c-ln">1</span><span class="c-ann">@RestController</span>
+<span class="c-ln">2</span><span class="c-ann">@RequestMapping</span>(<span class="c-str">"/api/contact"</span>)
+<span class="c-ln">3</span><span class="c-kw">public class</span> <span class="c-type">ContactController</span> {
+<span class="c-ln">4</span>
+<span class="c-ln">5</span>    <span class="c-ann">@PostMapping</span>
+<span class="c-ln">6</span>    <span class="c-kw">public</span> <span class="c-type">Response</span> submit(
+<span class="c-ln">7</span>        <span class="c-ann">@Valid</span> <span class="c-ann">@RequestBody</span> <span class="c-type">Request</span> req) {
+<span class="c-ln">8</span>        <span class="c-kw">return</span> contactService.save(req);
+<span class="c-ln">9</span>    }
+<span class="c-ln">10</span>}</pre>
+                    </div>
+                    <p class="tile__eyebrow" data-i18n="profile.b6.small">The Inside Scoop</p>
+                    <h3 class="tile__headline" data-i18n="profile.b6">Open to backend roles, exploring what's next</h3>
+                </article>
             </div>
         </div>
     </section>
@@ -126,11 +204,7 @@
     <!-- ================= PROJECTS ================= -->
     <section class="section" id="projects">
         <div class="container">
-            <header class="section-head reveal">
-                <p class="eyebrow mono" data-i18n="projects.eyebrow">Portfolio</p>
-                <h2 class="section-title" data-i18n-html="projects.title">Featured <span class="grad">projects</span></h2>
-                <p class="section-sub" data-i18n="projects.sub">Products I've designed, led and built end to end</p>
-            </header>
+            <h2 class="section-title reveal" data-i18n-html="projects.title">A small selection of <span class="accent">recent projects</span></h2>
             <div class="projects" id="projectsGrid">
                 <div class="skeleton skeleton--project"></div>
                 <div class="skeleton skeleton--project"></div>
@@ -141,11 +215,7 @@
     <!-- ================= TECH STACK ================= -->
     <section class="section" id="skills">
         <div class="container">
-            <header class="section-head reveal">
-                <p class="eyebrow mono" data-i18n="skills.eyebrow">Skills &amp; expertise</p>
-                <h2 class="section-title" data-i18n-html="skills.title">My <span class="grad">tech stack</span></h2>
-                <p class="section-sub" data-i18n="skills.sub">Technologies and tools I use to bring ideas to life</p>
-            </header>
+            <h2 class="section-title reveal" data-i18n-html="skills.title">My <span class="accent">tech stack</span></h2>
             <div class="stack" id="skillsGrid">
                 <div class="skeleton skeleton--card"></div>
                 <div class="skeleton skeleton--card"></div>
@@ -157,108 +227,122 @@
     <!-- ================= CERTIFICATIONS ================= -->
     <section class="section" id="certifications">
         <div class="container">
-            <header class="section-head reveal">
-                <p class="eyebrow mono" data-i18n="certs.eyebrow">Credentials</p>
-                <h2 class="section-title" data-i18n-html="certs.title">Training &amp; <span class="grad">Certifications</span></h2>
-                <p class="section-sub" data-i18n="certs.sub">Bootcamps, accreditations and certifications behind my hands-on skills</p>
-            </header>
+            <h2 class="section-title reveal" data-i18n-html="certs.title">Training &amp; <span class="accent">certifications</span></h2>
             <div class="certs">
-                <article class="cert reveal" style="--c:#818cf8">
+                <article class="cert reveal">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></div>
                     <div class="cert__body">
                         <h3 data-i18n="certs.c1.title">Web Development using Java &amp; Integrating AI Technologies</h3>
                         <p data-i18n-html="certs.c1.meta"><span>Tuwaiq Academy x Misk</span> · 300 hours</p>
                     </div>
-                    <time class="cert__date mono" datetime="2026-10" data-i18n="certs.oct2026">Oct 2026</time>
+                    <time class="cert__date" datetime="2026-10" data-i18n="certs.oct2026">Oct 2026</time>
                 </article>
-                <article class="cert reveal" style="--c:#34d399">
+                <article class="cert reveal">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
                     <div class="cert__body">
                         <h3 data-i18n="certs.c2.title">Professional Accreditation: Software Engineer</h3>
                         <p data-i18n-html="certs.c2.meta"><span>Saudi Council of Engineers (SCE)</span></p>
                     </div>
                 </article>
-                <article class="cert reveal" style="--c:#fbbf24">
+                <article class="cert reveal">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
                     <div class="cert__body">
                         <h3 data-i18n="certs.c3.title">Certified Business Professional in Project Management (CBP-PM)</h3>
                         <p><span>IBTA</span></p>
                     </div>
                 </article>
-                <article class="cert reveal" style="--c:#22d3ee">
+                <article class="cert reveal">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v5m0 0-6 5m6-5 6 5"/></svg></div>
                     <div class="cert__body">
                         <h3 data-i18n="certs.c4.title">Cisco Certified Network Associate (CCNA) Routing and Switching</h3>
                         <p><span>Cisco</span></p>
                     </div>
                 </article>
-                <article class="cert reveal" style="--c:#c084fc">
+                <article class="cert reveal">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
                     <div class="cert__body">
                         <h3 data-i18n="certs.c5.title">Software Engineering Summer Training</h3>
                         <p data-i18n-html="certs.c5.meta"><span>United Cement Industrial Company</span> · 200 hours</p>
                     </div>
                 </article>
-                <article class="cert reveal" style="--c:#f472b6">
+                <article class="cert reveal">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/></svg></div>
                     <div class="cert__body">
                         <h3 data-i18n="certs.c6.title">3rd Place: Expo 2030 Riyadh Hackathon</h3>
                         <p data-i18n-html="certs.c6.meta"><span>Tuwaiq Academy x Misk</span> · Team leader</p>
                     </div>
-                    <time class="cert__date mono" datetime="2026-10" data-i18n="certs.oct2026">Oct 2026</time>
+                    <time class="cert__date" datetime="2026-10" data-i18n="certs.oct2026">Oct 2026</time>
                 </article>
             </div>
         </div>
     </section>
 
     <!-- ================= CONTACT ================= -->
-    <section class="section" id="contact">
+    <section class="section contact" id="contact">
         <div class="container">
-            <header class="section-head reveal">
-                <p class="eyebrow mono" data-i18n="contact.eyebrow">Contact</p>
-                <h2 class="section-title" data-i18n-html="contact.title">Get in <span class="grad">touch</span></h2>
-                <p class="section-sub" data-i18n="contact.sub">Have a role, a project, or just want to say hi? My inbox is open.</p>
-            </header>
+            <h2 class="contact__title reveal" data-i18n-html="contact.title">Let's <span class="accent">Talk</span></h2>
+            <p class="contact__sub reveal" data-i18n="contact.sub">Have a role, a project, or just want to say hi? My inbox is open.</p>
 
-            <form class="form reveal" id="contactForm" novalidate>
-                <div class="form__row">
+            <div class="contact__grid">
+                <ul class="contact__info reveal">
+                    <li>
+                        <span class="contact__label" data-i18n="contact.email">Email</span>
+                        <a href="mailto:kfupm.turki@gmail.com" dir="ltr">kfupm.turki@gmail.com</a>
+                    </li>
+                    <li>
+                        <span class="contact__label">LinkedIn</span>
+                        <a href="https://www.linkedin.com/in/turki-abdullah-alghamdi" target="_blank" rel="noopener" dir="ltr">turki-abdullah-alghamdi</a>
+                    </li>
+                    <li>
+                        <span class="contact__label">GitHub</span>
+                        <a href="https://github.com/gTurki" target="_blank" rel="noopener" dir="ltr">github.com/gTurki</a>
+                    </li>
+                    <li>
+                        <span class="contact__label" data-i18n="contact.location">Location</span>
+                        <span data-i18n="contact.city">Riyadh, Saudi Arabia</span>
+                    </li>
+                </ul>
+
+                <form class="form reveal" id="contactForm" novalidate>
+                    <div class="form__row">
+                        <label class="field">
+                            <span data-i18n="form.name">Name</span>
+                            <input type="text" name="senderName" maxlength="100" placeholder="Your name" data-i18n-attr="placeholder:form.name.ph" required autocomplete="name">
+                            <small class="field__error" data-error-for="senderName"></small>
+                        </label>
+                        <label class="field">
+                            <span data-i18n="form.email">Email</span>
+                            <input type="email" name="senderEmail" maxlength="150" placeholder="you@example.com" dir="ltr" required autocomplete="email">
+                            <small class="field__error" data-error-for="senderEmail"></small>
+                        </label>
+                    </div>
                     <label class="field">
-                        <span data-i18n="form.name">Name</span>
-                        <input type="text" name="senderName" maxlength="100" placeholder="Your name" data-i18n-attr="placeholder:form.name.ph" required autocomplete="name">
-                        <small class="field__error" data-error-for="senderName"></small>
+                        <span data-i18n="form.subject">Subject</span>
+                        <input type="text" name="subject" maxlength="200" placeholder="What's this about?" data-i18n-attr="placeholder:form.subject.ph">
+                        <small class="field__error" data-error-for="subject"></small>
                     </label>
                     <label class="field">
-                        <span data-i18n="form.email">Email</span>
-                        <input type="email" name="senderEmail" maxlength="150" placeholder="you@example.com" dir="ltr" required autocomplete="email">
-                        <small class="field__error" data-error-for="senderEmail"></small>
+                        <span data-i18n="form.message">Message</span>
+                        <textarea name="message" rows="5" maxlength="5000" placeholder="Your message..." data-i18n-attr="placeholder:form.message.ph" required></textarea>
+                        <small class="field__error" data-error-for="message"></small>
                     </label>
-                </div>
-                <label class="field">
-                    <span data-i18n="form.subject">Subject</span>
-                    <input type="text" name="subject" maxlength="200" placeholder="What's this about?" data-i18n-attr="placeholder:form.subject.ph">
-                    <small class="field__error" data-error-for="subject"></small>
-                </label>
-                <label class="field">
-                    <span data-i18n="form.message">Message</span>
-                    <textarea name="message" rows="6" maxlength="5000" placeholder="Your message..." data-i18n-attr="placeholder:form.message.ph" required></textarea>
-                    <small class="field__error" data-error-for="message"></small>
-                </label>
-                <!-- Honeypot: hidden from people, bots fill it in -->
-                <label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+                    <!-- Honeypot: hidden from people, bots fill it in -->
+                    <label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
 
-                <button type="submit" class="btn btn--primary btn--block" id="contactSubmit">
-                    <span data-i18n="form.send">Send Message</span>
-                    <svg viewBox="0 0 24 24" aria-hidden="true" class="flip-rtl"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
-                </button>
-                <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
-            </form>
+                    <button type="submit" class="btn btn--primary btn--block" id="contactSubmit">
+                        <span data-i18n="form.send">Send Message</span>
+                        <svg viewBox="0 0 24 24" aria-hidden="true" class="flip-rtl"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+                    </button>
+                    <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+                </form>
+            </div>
         </div>
     </section>
 </main>
 
 <footer class="footer">
     <div class="container footer__inner">
-        <p>© <span id="year"></span> <span data-i18n="hero.name">Turki Alghamdi</span></p>
+        <p>© <span id="year"></span> <span data-i18n="hero.name">Turki Alghamdi</span> · <span data-i18n="footer.built">Built with Spring Boot &amp; MySQL</span></p>
         <div class="footer__links">
             <a href="https://github.com/gTurki" target="_blank" rel="noopener">GitHub</a>
             <a href="https://www.linkedin.com/in/turki-abdullah-alghamdi" target="_blank" rel="noopener">LinkedIn</a>
@@ -266,6 +350,8 @@
         </div>
     </div>
 </footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="js/i18n.js"></script>
 <script src="js/app.js"></script>
