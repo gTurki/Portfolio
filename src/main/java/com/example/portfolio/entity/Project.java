@@ -24,6 +24,13 @@ public class Project {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    /** Optional Arabic title/description shown when the site is in Arabic; fall back to English. */
+    @Column(name = "title_ar", length = 200)
+    private String titleAr;
+
+    @Column(name = "description_ar", columnDefinition = "TEXT")
+    private String descriptionAr;
+
     /** Comma-separated list, e.g. "Java, Spring Boot, MySQL". Exposed as a list in the DTO. */
     @Column(name = "tech_stack", length = 500)
     private String techStack;

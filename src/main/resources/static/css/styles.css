@@ -58,7 +58,21 @@ p { margin: 0 0 1rem; }
 .nav.is-scrolled { background: rgba(3, 7, 18, .8); backdrop-filter: blur(14px); border-bottom-color: var(--border); }
 .nav__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
 .nav__brand { font-weight: 700; font-size: 1.25rem; background: linear-gradient(90deg, var(--indigo), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.nav__links { display: flex; align-items: center; gap: 2rem; font-size: .95rem; font-weight: 500; }
+.nav__links { display: flex; align-items: center; gap: 2rem; margin-inline-start: auto; font-size: .95rem; font-weight: 500; }
+.nav__end { display: flex; align-items: center; gap: .5rem; margin-inline-start: 1.25rem; }
+
+/* Language switch: flag + the name of the other language */
+.lang-btn {
+    display: inline-flex; align-items: center; gap: .5rem; height: 38px; padding: 0 .8rem;
+    border-radius: 8px; border: 1px solid var(--border-2); background: rgba(17, 24, 39, .6);
+    color: var(--text); font: 500 .9rem var(--font); cursor: pointer;
+    transition: border-color .2s, background .2s, transform .2s;
+}
+.lang-btn:hover { border-color: var(--indigo); background: var(--surface-2); transform: translateY(-1px); }
+.lang-btn:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+.lang-btn img { width: 24px; height: 18px; border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px rgba(255, 255, 255, .15); }
+.lang-btn [lang="ar"] { font-family: "IBM Plex Sans Arabic", var(--font); }
+.lang-btn [lang="en"] { font-family: "Inter", system-ui, sans-serif; }
 .nav__links a:not(.btn) { color: var(--muted); transition: color .2s; }
 .nav__links a:not(.btn):hover, .nav__links a.is-active { color: var(--indigo); }
 .nav__toggle { display: none; background: none; border: 0; padding: 8px; cursor: pointer; }
@@ -66,6 +80,7 @@ p { margin: 0 0 1rem; }
 
 @media (max-width: 860px) {
     .nav__toggle { display: block; }
+    .nav__end { margin-inline-start: auto; }
     .nav__links {
         position: absolute; top: 64px; left: 0; right: 0; display: none;
         flex-direction: column; align-items: stretch; gap: 0; padding: .5rem 16px 1rem;
@@ -183,7 +198,7 @@ p { margin: 0 0 1rem; }
 .cover-gen--photo .cover-gen__logo { max-width: none; max-height: none; width: 100%; height: 100%; object-fit: cover; filter: none; }
 .cover-gen__tag { position: relative; margin-top: .4rem; font: .78rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 255, 255, .75); }
 .badge {
-    position: absolute; top: 12px; right: 12px; z-index: 1;
+    position: absolute; top: 12px; inset-inline-end: 12px; z-index: 1;
     font: 500 .7rem var(--mono); padding: .3rem .6rem; border-radius: 99px;
     color: #fff; background: rgba(3, 7, 18, .6); border: 1px solid rgba(255, 255, 255, .18); backdrop-filter: blur(6px);
 }
@@ -249,7 +264,7 @@ p { margin: 0 0 1rem; }
 .field input:focus, .field textarea:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 3px rgba(99, 102, 241, .2); }
 .field.has-error input, .field.has-error textarea { border-color: var(--danger); }
 .field__error { display: block; min-height: 1em; margin-top: .3rem; color: var(--danger); font-size: .8rem; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.hp { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .form__status { margin: 1rem 0 0; min-height: 1.4em; text-align: center; font-size: .92rem; }
 .form__status.is-success { color: var(--success); }
 .form__status.is-error { color: var(--danger); }
@@ -271,6 +286,28 @@ p { margin: 0 0 1rem; }
 /* ---------- Reveal ---------- */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.is-visible { opacity: 1; transform: none; }
+
+/* ---------- Arabic / right-to-left ---------- */
+html[dir="rtl"] {
+    /* Inter and JetBrains Mono have no Arabic glyphs */
+    --font: "IBM Plex Sans Arabic", "Inter", system-ui, sans-serif;
+    --mono: "IBM Plex Sans Arabic", "JetBrains Mono", monospace;
+}
+html[dir="rtl"] body { line-height: 1.85; }
+/* Letter-spacing and negative tracking break Arabic letter joining */
+html[dir="rtl"] :is(.eyebrow, .hero__kicker, .stack-card__head h3, .cover-gen__tag, .cover-gen__name,
+                    .hero__name, .section-title, .badge, .cert__date) {
+    letter-spacing: 0; text-transform: none;
+}
+html[dir="rtl"] .eyebrow { font-size: .9rem; font-weight: 600; }
+html[dir="rtl"] .hero__kicker { font-size: 1.1rem; }
+html[dir="rtl"] .hero__name, html[dir="rtl"] .section-title { line-height: 1.35; }
+html[dir="rtl"] .hero__typed { font-weight: 400; }
+html[dir="rtl"] .stack-card__head h3 { font-size: .95rem; font-weight: 600; }
+/* Code-ish tags stay in English and monospace */
+html[dir="rtl"] .tags li { font-family: "JetBrains Mono", monospace; }
+/* Arrows that point "forward" should point left in RTL */
+html[dir="rtl"] .flip-rtl { transform: scaleX(-1); }
 
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }

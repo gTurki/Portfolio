@@ -9,7 +9,9 @@ import java.util.List;
 public record ProjectDto(
         Long id,
         String title,
+        String titleAr,
         String description,
+        String descriptionAr,
         List<String> techStack,
         String sourceCodeUrl,
         String liveDemoUrl,
@@ -21,7 +23,9 @@ public record ProjectDto(
         return new ProjectDto(
                 p.getId(),
                 p.getTitle(),
+                p.getTitleAr(),
                 p.getDescription(),
+                p.getDescriptionAr(),
                 splitTechStack(p.getTechStack()),
                 p.getSourceCodeUrl(),
                 p.getLiveDemoUrl(),

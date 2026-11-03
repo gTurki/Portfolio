@@ -23,6 +23,14 @@ public class Skill {
     @Column(nullable = false, length = 50)
     private String category;
 
+    /** Optional Arabic display name; falls back to {@link #name} (most tech names stay in English). */
+    @Column(name = "name_ar", length = 100)
+    private String nameAr;
+
+    /** Optional Arabic category label; falls back to {@link #category}. */
+    @Column(name = "category_ar", length = 80)
+    private String categoryAr;
+
     /** 0 - 100 */
     @Column(name = "proficiency_level", nullable = false)
     private Integer proficiencyLevel;

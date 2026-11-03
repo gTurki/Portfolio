@@ -7,6 +7,8 @@
     const $ = (sel, root = document) => root.querySelector(sel);
     const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const t = (key) => I18N.t(key);
+    const isAr = () => I18N.lang === "ar";
 
     /** Escape untrusted text before inserting into HTML. */
     const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({
@@ -29,6 +31,29 @@
         if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
         return res.json();
     }
+
+    // ---------------- Language ----------------
+    I18N.init();
+
+    const langBtn = $("#langToggle");
+    const langFlag = $("#langFlag");
+    const langLabel = $("#langLabel");
+
+    function updateLangButton(lang) {
+        // The button offers the *other* language
+        if (lang === "ar") {
+            langFlag.src = "img/flags/gb.svg";
+            langLabel.textContent = "English";
+            langLabel.lang = "en";
+        } else {
+            langFlag.src = "img/flags/sa.svg";
+            langLabel.textContent = "العربية";
+            langLabel.lang = "ar";
+        }
+        langBtn.setAttribute("aria-label", t("switchTo"));
+    }
+    updateLangButton(I18N.lang);
+    langBtn.addEventListener("click", () => I18N.toggle());
 
     // ---------------- Nav ----------------
     const nav = $("#nav");
@@ -67,14 +92,14 @@
     $("#year").textContent = new Date().getFullYear();
 
     // ---------------- Typewriter ----------------
-    const phrases = [
-        "Building secure, scalable backends",
-        "Integrating AI into real products",
-        "Real-time systems with Spring Boot",
-        "Leading teams from idea to delivery"
-    ];
     const typedEl = $("#typed");
-    if (!reducedMotion) {
+    let typeTimer = null;
+
+    function startTypewriter() {
+        clearTimeout(typeTimer);
+        const phrases = t("typed");
+        typedEl.textContent = phrases[0];
+        if (reducedMotion) return;
         let p = 0, i = phrases[0].length, deleting = true;
         const tick = () => {
             const word = phrases[p];
@@ -83,10 +108,11 @@
             let delay = deleting ? 35 : 70;
             if (!deleting && i === word.length) { deleting = true; delay = 2200; }
             else if (deleting && i === 0) { deleting = false; p = (p + 1) % phrases.length; delay = 400; }
-            setTimeout(tick, delay);
+            typeTimer = setTimeout(tick, delay);
         };
-        setTimeout(tick, 2500);
+        typeTimer = setTimeout(tick, 2500);
     }
+    startTypewriter();
 
     // ---------------- Profile photo fallback ----------------
     const photo = $("#profilePhoto");
@@ -106,12 +132,15 @@
         }, { threshold: 0.12 })
         : null;
 
-    function reveal(elements) {
+    function reveal(elements, { instant = false } = {}) {
         elements.forEach((el, idx) => {
             el.classList.add("reveal");
+            if (instant || !revealObserver) {
+                el.classList.add("is-visible");
+                return;
+            }
             el.style.transitionDelay = `${Math.min(idx % 3, 2) * 80}ms`;
-            if (revealObserver) revealObserver.observe(el);
-            else el.classList.add("is-visible");
+            revealObserver.observe(el);
         });
     }
     reveal($$(".reveal"));
@@ -124,9 +153,15 @@
         ["#2563eb", "#a78bfa"], ["#db2777", "#f59e0b"], ["#059669", "#3b82f6"]
     ];
 
+    /** Localised view of a project: Arabic fields when available, English otherwise. */
+    const projectText = (p) => ({
+        title: (isAr() && p.titleAr) || p.title,
+        description: (isAr() && p.descriptionAr) || p.description
+    });
+
     function coverHtml(p, idx) {
         // "Rifd: AI Operations Center" -> name "Rifd", tag "AI Operations Center"
-        const [name, ...rest] = String(p.title).split(":");
+        const [name, ...rest] = String(projectText(p).title).split(":");
         const tag = rest.join(":").trim() || (p.techStack?.[0] ?? "");
         const [c1, c2] = COVER_COLORS[idx % COVER_COLORS.length];
         const img = safeUrl(p.imageUrl);
@@ -134,7 +169,7 @@
         // in tintCover); a wide, fully opaque image (a screenshot) switches to full-bleed instead.
         return `<div class="cover-gen${img ? " cover-gen--logo" : ""}" style="--c1:${c1};--c2:${c2}">
                     ${img
-                        ? `<img class="cover-gen__logo" src="${esc(img)}" alt="${esc(name.trim())} logo" loading="lazy">`
+                        ? `<img class="cover-gen__logo" src="${esc(img)}" alt="${esc(t("logoAlt")(name.trim()))}" loading="lazy">`
                         : `<span class="cover-gen__name">${esc(name.trim())}</span>`}
                     ${tag ? `<span class="cover-gen__tag">${esc(tag)}</span>` : ""}
                 </div>`;
@@ -180,31 +215,34 @@
         }
     }
 
-    function renderProjects(projects) {
+    let projectsData = null;
+
+    function renderProjects({ instant = false } = {}) {
         const grid = $("#projectsGrid");
-        if (!projects.length) {
-            grid.innerHTML = `<p class="empty">No projects yet.</p>`;
+        if (!projectsData.length) {
+            grid.innerHTML = `<p class="empty">${esc(t("noProjects"))}</p>`;
             return;
         }
         // Featured first, then newest (API already sorts by date)
-        const sorted = [...projects].sort((a, b) => Number(b.featured) - Number(a.featured));
+        const sorted = [...projectsData].sort((a, b) => Number(b.featured) - Number(a.featured));
         grid.innerHTML = sorted.map((p, idx) => {
+            const { title, description } = projectText(p);
             const src = safeUrl(p.sourceCodeUrl);
             const demo = safeUrl(p.liveDemoUrl);
             return `
             <article class="project">
                 <div class="project__cover">
-                    ${p.featured ? `<span class="badge">Featured</span>` : ""}
+                    ${p.featured ? `<span class="badge">${esc(t("featured"))}</span>` : ""}
                     ${coverHtml(p, idx)}
                 </div>
                 <div class="project__body">
-                    <h3>${esc(p.title)}</h3>
-                    <p class="project__desc">${esc(p.description)}</p>
-                    <button class="more" type="button" hidden>Read more</button>
-                    ${p.techStack?.length ? `<ul class="tags">${p.techStack.map((t) => `<li>${esc(t)}</li>`).join("")}</ul>` : ""}
+                    <h3>${esc(title)}</h3>
+                    <p class="project__desc">${esc(description)}</p>
+                    <button class="more" type="button" hidden>${esc(t("readMore"))}</button>
+                    ${p.techStack?.length ? `<ul class="tags">${p.techStack.map((s) => `<li dir="ltr">${esc(s)}</li>`).join("")}</ul>` : ""}
                     ${src || demo ? `<div class="project__links">
-                        ${src ? `<a href="${esc(src)}" target="_blank" rel="noopener noreferrer">${ICON_GITHUB}Source Code</a>` : ""}
-                        ${demo ? `<a href="${esc(demo)}" target="_blank" rel="noopener noreferrer">${ICON_EXTERNAL}Live Demo</a>` : ""}
+                        ${src ? `<a href="${esc(src)}" target="_blank" rel="noopener noreferrer">${ICON_GITHUB}${esc(t("sourceCode"))}</a>` : ""}
+                        ${demo ? `<a href="${esc(demo)}" target="_blank" rel="noopener noreferrer">${ICON_EXTERNAL}${esc(t("liveDemo"))}</a>` : ""}
                     </div>` : ""}
                 </div>
             </article>`;
@@ -224,47 +262,56 @@
                 btn.hidden = false;
                 btn.addEventListener("click", () => {
                     const expanded = card.classList.toggle("is-expanded");
-                    btn.textContent = expanded ? "Show less" : "Read more";
+                    btn.textContent = t(expanded ? "showLess" : "readMore");
                 });
             }
         });
-        reveal($$(".project", grid));
+        reveal($$(".project", grid), { instant });
     }
 
     async function loadProjects() {
         try {
-            renderProjects(await getJson("/api/projects"));
+            projectsData = await getJson("/api/projects");
+            renderProjects();
         } catch (err) {
             console.error("Failed to load projects", err);
-            $("#projectsGrid").innerHTML = `<p class="empty">Couldn't load projects right now.</p>`;
+            $("#projectsGrid").innerHTML = `<p class="empty">${esc(t("projectsError"))}</p>`;
         }
     }
 
     // ---------------- Tech stack ----------------
     const STACK_COLORS = ["#818cf8", "#34d399", "#c084fc", "#fbbf24", "#22d3ee", "#f472b6", "#f87171", "#a3e635"];
+    let skillsData = null;
+
+    function renderSkills({ instant = false } = {}) {
+        const grid = $("#skillsGrid");
+        if (!skillsData.length) {
+            grid.innerHTML = `<p class="empty">${esc(t("noSkills"))}</p>`;
+            return;
+        }
+        // Group by the English category (stable key); show the Arabic label when available
+        const groups = new Map();
+        skillsData.forEach((s) => {
+            if (!groups.has(s.category)) {
+                groups.set(s.category, { label: (isAr() && s.categoryAr) || s.category, items: [] });
+            }
+            groups.get(s.category).items.push(s);
+        });
+        grid.innerHTML = [...groups.values()].map(({ label, items }, idx) => `
+            <article class="stack-card" style="--c:${STACK_COLORS[idx % STACK_COLORS.length]}">
+                <div class="stack-card__head"><h3>${esc(label)}</h3><span>${items.length}</span></div>
+                <ul class="chips">${items.map((s) => `<li dir="auto">${esc((isAr() && s.nameAr) || s.name)}</li>`).join("")}</ul>
+            </article>`).join("");
+        reveal($$(".stack-card", grid), { instant });
+    }
 
     async function loadSkills() {
-        const grid = $("#skillsGrid");
         try {
-            const skills = await getJson("/api/skills");
-            if (!skills.length) {
-                grid.innerHTML = `<p class="empty">No skills added yet.</p>`;
-                return;
-            }
-            const groups = new Map();
-            skills.forEach((s) => {
-                if (!groups.has(s.category)) groups.set(s.category, []);
-                groups.get(s.category).push(s);
-            });
-            grid.innerHTML = [...groups.entries()].map(([category, items], idx) => `
-                <article class="stack-card" style="--c:${STACK_COLORS[idx % STACK_COLORS.length]}">
-                    <div class="stack-card__head"><h3>${esc(category)}</h3><span>${items.length}</span></div>
-                    <ul class="chips">${items.map((s) => `<li>${esc(s.name)}</li>`).join("")}</ul>
-                </article>`).join("");
-            reveal($$(".stack-card", grid));
+            skillsData = await getJson("/api/skills");
+            renderSkills();
         } catch (err) {
             console.error("Failed to load skills", err);
-            grid.innerHTML = `<p class="empty">Couldn't load skills right now.</p>`;
+            $("#skillsGrid").innerHTML = `<p class="empty">${esc(t("skillsError"))}</p>`;
         }
     }
 
@@ -290,11 +337,29 @@
 
     function validate(data) {
         const errors = {};
-        if (!data.senderName) errors.senderName = "Name is required";
-        if (!data.senderEmail) errors.senderEmail = "Email is required";
-        else if (!EMAIL_RE.test(data.senderEmail)) errors.senderEmail = "Email must be valid";
-        if (!data.message) errors.message = "Message is required";
+        if (!data.senderName) errors.senderName = t("nameRequired");
+        if (!data.senderEmail) errors.senderEmail = t("emailRequired");
+        else if (!EMAIL_RE.test(data.senderEmail)) errors.senderEmail = t("emailInvalid");
+        if (!data.message) errors.message = t("messageRequired");
         return errors;
+    }
+
+    /** Server messages are English; in Arabic mode replace them with Arabic equivalents. */
+    function serverFieldErrors(fieldErrors = {}) {
+        if (!isAr()) return fieldErrors;
+        const map = t("fieldInvalid");
+        return Object.fromEntries(Object.keys(fieldErrors).map((k) => [k, map[k] || t("genericError")]));
+    }
+
+    function serverErrorMessage(res, body) {
+        if (res.status === 429) {
+            const seconds = Number(res.headers.get("Retry-After")) || 600;
+            return t("rateLimited")(Math.max(1, Math.ceil(seconds / 60)));
+        }
+        if (res.status === 400 && body.fieldErrors && Object.keys(body.fieldErrors).length) {
+            return isAr() ? t("fixFields") : (body.message || t("fixFields"));
+        }
+        return isAr() ? t("genericError") : (body.message || t("genericError"));
     }
 
     form.addEventListener("submit", async (e) => {
@@ -311,12 +376,12 @@
         const clientErrors = validate(payload);
         showErrors(clientErrors);
         if (Object.keys(clientErrors).length) {
-            setStatus("Please fix the highlighted fields.", "error");
+            setStatus(t("fixFields"), "error");
             return;
         }
 
         submitBtn.disabled = true;
-        submitLabel.textContent = "Sending…";
+        submitLabel.textContent = t("sending");
         setStatus("");
 
         try {
@@ -327,20 +392,30 @@
             });
             const body = await res.json().catch(() => ({}));
             if (!res.ok) {
-                showErrors(body.fieldErrors);
-                setStatus(body.message || "Something went wrong. Please try again.", "error");
+                showErrors(serverFieldErrors(body.fieldErrors));
+                setStatus(serverErrorMessage(res, body), "error");
                 return;
             }
             form.reset();
             showErrors();
-            setStatus(body.detail || "Message sent. Thank you!", "success");
+            setStatus(isAr() ? t("success") : (body.detail || t("success")), "success");
         } catch (err) {
             console.error("Contact submit failed", err);
-            setStatus("Network error. Please check your connection and try again.", "error");
+            setStatus(t("networkError"), "error");
         } finally {
             submitBtn.disabled = false;
-            submitLabel.textContent = "Send Message";
+            submitLabel.textContent = t("send");
         }
+    });
+
+    // ---------------- Re-render on language change ----------------
+    I18N.onChange((lang) => {
+        updateLangButton(lang);
+        startTypewriter();
+        if (projectsData) renderProjects({ instant: true });
+        if (skillsData) renderSkills({ instant: true });
+        showErrors();
+        setStatus("");
     });
 
     // ---------------- Init ----------------

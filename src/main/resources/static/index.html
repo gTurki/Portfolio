@@ -1,13 +1,21 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Turki Alghamdi | Software Engineer</title>
-    <meta name="description" content="Portfolio of Turki Alghamdi, software engineer and Java / Spring Boot backend developer based in Riyadh.">
+    <title data-i18n="meta.title">Turki Alghamdi | Software Engineer</title>
+    <meta name="description" data-i18n-attr="content:meta.description" content="Portfolio of Turki Alghamdi, software engineer and Java / Spring Boot backend developer based in Riyadh.">
+    <script>
+        // Apply the saved language before first paint to avoid a flash of the wrong direction.
+        (function () {
+            var lang = null;
+            try { lang = new URLSearchParams(location.search).get("lang") || localStorage.getItem("lang"); } catch (e) {}
+            if (lang === "ar") { document.documentElement.lang = "ar"; document.documentElement.dir = "rtl"; }
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -15,18 +23,24 @@
 <!-- ================= NAV ================= -->
 <header class="nav" id="nav">
     <div class="container nav__inner">
-        <a href="#hero" class="nav__brand">@TA</a>
-        <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle">
-            <span></span><span></span><span></span>
-        </button>
+        <a href="#hero" class="nav__brand" dir="ltr">@TA</a>
         <nav class="nav__links" id="navLinks">
-            <a href="#hero" data-spy="hero">Home</a>
-            <a href="#about" data-spy="about">About</a>
-            <a href="#projects" data-spy="projects">Projects</a>
-            <a href="#skills" data-spy="skills">Tech Stack</a>
-            <a href="#certifications" data-spy="certifications">Certifications</a>
-            <a href="#contact" class="btn btn--primary btn--sm">Contact Me</a>
+            <a href="#hero" data-spy="hero" data-i18n="nav.home">Home</a>
+            <a href="#about" data-spy="about" data-i18n="nav.about">About</a>
+            <a href="#projects" data-spy="projects" data-i18n="nav.projects">Projects</a>
+            <a href="#skills" data-spy="skills" data-i18n="nav.skills">Tech Stack</a>
+            <a href="#certifications" data-spy="certifications" data-i18n="nav.certs">Certifications</a>
+            <a href="#contact" class="btn btn--primary btn--sm" data-i18n="nav.contact">Contact Me</a>
         </nav>
+        <div class="nav__end">
+            <button class="lang-btn" type="button" id="langToggle" aria-label="Switch to Arabic">
+                <img src="img/flags/sa.svg" alt="" width="24" height="18" id="langFlag">
+                <span id="langLabel" lang="ar">العربية</span>
+            </button>
+            <button class="nav__toggle" aria-expanded="false" id="navToggle" data-i18n-attr="aria-label:nav.menu" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </div>
 </header>
 
@@ -39,21 +53,21 @@
             <div class="grid-pattern"></div>
         </div>
         <div class="container hero__inner">
-            <p class="hero__kicker mono">Hello, I'm</p>
-            <h1 class="hero__name">Turki Alghamdi</h1>
+            <p class="hero__kicker mono" data-i18n="hero.kicker">Hello, I'm</p>
+            <h1 class="hero__name" data-i18n="hero.name">Turki Alghamdi</h1>
             <p class="hero__typed" aria-live="polite">
                 <span id="typed">Building secure, scalable backends</span><span class="caret" aria-hidden="true"></span>
             </p>
-            <p class="hero__bio">
+            <p class="hero__bio" data-i18n="hero.bio">
                 Software engineer specializing in Java and Spring Boot. I build secure REST APIs, real-time
                 systems and AI-integrated backends, and I lead teams from requirements to working delivery.
             </p>
             <div class="hero__actions">
                 <a href="#projects" class="btn btn--primary">
-                    View My Work
+                    <span data-i18n="hero.work">View My Work</span>
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                 </a>
-                <a href="#contact" class="btn btn--outline">Get In Touch</a>
+                <a href="#contact" class="btn btn--outline" data-i18n="hero.contact">Get In Touch</a>
             </div>
             <div class="hero__social">
                 <a href="https://github.com/gTurki" target="_blank" rel="noopener" aria-label="GitHub">
@@ -67,7 +81,7 @@
                 </a>
             </div>
         </div>
-        <a href="#about" class="hero__scroll" aria-label="Scroll to About">
+        <a href="#about" class="hero__scroll" data-i18n-attr="aria-label:hero.scroll" aria-label="Scroll to About">
             <svg viewBox="0 0 24 24" class="icon-stroke"><path d="M12 5v14m0 0-6-6m6 6 6-6"/></svg>
         </a>
     </section>
@@ -77,32 +91,31 @@
         <div class="container about">
             <div class="about__photo reveal">
                 <div class="about__glow" aria-hidden="true"></div>
-                <!-- Drop your photo at static/files/profile.jpg; the initials show until then. -->
-                <img src="files/profile.jpg" alt="Turki Alghamdi" id="profilePhoto">
+                <img src="files/profile.jpg" alt="Turki Alghamdi" data-i18n-attr="alt:hero.name" id="profilePhoto">
                 <div class="about__initials" aria-hidden="true">TA</div>
             </div>
             <div class="about__text reveal">
-                <p class="eyebrow mono">About me</p>
-                <h2 class="section-title section-title--left">From requirements to <span class="grad">delivery</span></h2>
-                <p>
+                <p class="eyebrow mono" data-i18n="about.eyebrow">About me</p>
+                <h2 class="section-title section-title--left" data-i18n-html="about.title">From requirements to <span class="grad">delivery</span></h2>
+                <p data-i18n="about.p1">
                     I'm a Software Engineering graduate from KFUPM focused on the Java ecosystem: Spring Boot,
                     Spring Security, JPA/Hibernate and MySQL. I've shipped Spring Boot products that integrate OpenAI,
                     Gemini, Google Maps, Gmail SMTP, Telegram Bot and WhatsApp APIs.
                 </p>
-                <p>
+                <p data-i18n="about.p2">
                     In the 300-hour Tuwaiq Academy x Misk bootcamp I went from CRUD APIs to production-style systems
                     with JWT security, WebSockets, concurrency control, AI fallbacks and Docker deployment, and led two
                     of its full-stack projects as team leader.
                 </p>
                 <ul class="stats">
-                    <li><strong>3rd</strong><span>Expo 2030 Riyadh Hackathon</span></li>
-                    <li><strong>5</strong><span>Spring Boot API projects</span></li>
-                    <li><strong>300h</strong><span>Java &amp; AI bootcamp</span></li>
+                    <li><strong data-i18n="about.stat1.value">3rd</strong><span data-i18n="about.stat1.label">Expo 2030 Riyadh Hackathon</span></li>
+                    <li><strong>5</strong><span data-i18n="about.stat2.label">Spring Boot API projects</span></li>
+                    <li><strong data-i18n="about.stat3.value">300h</strong><span data-i18n="about.stat3.label">Java &amp; AI bootcamp</span></li>
                 </ul>
                 <div class="about__actions">
-                    <a href="#contact" class="btn btn--primary">Let's Talk</a>
+                    <a href="#contact" class="btn btn--primary" data-i18n="about.talk">Let's Talk</a>
                     <a href="files/Turki_Alghamdi_CV.pdf" class="btn btn--outline" download>
-                        Download CV
+                        <span data-i18n="about.cv">Download CV</span>
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0-4-4m4 4 4-4M5 21h14"/></svg>
                     </a>
                 </div>
@@ -114,9 +127,9 @@
     <section class="section" id="projects">
         <div class="container">
             <header class="section-head reveal">
-                <p class="eyebrow mono">Portfolio</p>
-                <h2 class="section-title">Featured <span class="grad">projects</span></h2>
-                <p class="section-sub">Products I've designed, led and built end to end</p>
+                <p class="eyebrow mono" data-i18n="projects.eyebrow">Portfolio</p>
+                <h2 class="section-title" data-i18n-html="projects.title">Featured <span class="grad">projects</span></h2>
+                <p class="section-sub" data-i18n="projects.sub">Products I've designed, led and built end to end</p>
             </header>
             <div class="projects" id="projectsGrid">
                 <div class="skeleton skeleton--project"></div>
@@ -129,9 +142,9 @@
     <section class="section" id="skills">
         <div class="container">
             <header class="section-head reveal">
-                <p class="eyebrow mono">Skills &amp; expertise</p>
-                <h2 class="section-title">My <span class="grad">tech stack</span></h2>
-                <p class="section-sub">Technologies and tools I use to bring ideas to life</p>
+                <p class="eyebrow mono" data-i18n="skills.eyebrow">Skills &amp; expertise</p>
+                <h2 class="section-title" data-i18n-html="skills.title">My <span class="grad">tech stack</span></h2>
+                <p class="section-sub" data-i18n="skills.sub">Technologies and tools I use to bring ideas to life</p>
             </header>
             <div class="stack" id="skillsGrid">
                 <div class="skeleton skeleton--card"></div>
@@ -145,54 +158,54 @@
     <section class="section" id="certifications">
         <div class="container">
             <header class="section-head reveal">
-                <p class="eyebrow mono">Credentials</p>
-                <h2 class="section-title">Training &amp; <span class="grad">Certifications</span></h2>
-                <p class="section-sub">Bootcamps, accreditations and certifications behind my hands-on skills</p>
+                <p class="eyebrow mono" data-i18n="certs.eyebrow">Credentials</p>
+                <h2 class="section-title" data-i18n-html="certs.title">Training &amp; <span class="grad">Certifications</span></h2>
+                <p class="section-sub" data-i18n="certs.sub">Bootcamps, accreditations and certifications behind my hands-on skills</p>
             </header>
             <div class="certs">
                 <article class="cert reveal" style="--c:#818cf8">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></div>
                     <div class="cert__body">
-                        <h3>Web Development using Java &amp; Integrating AI Technologies</h3>
-                        <p><span>Tuwaiq Academy x Misk</span> · 300 hours</p>
+                        <h3 data-i18n="certs.c1.title">Web Development using Java &amp; Integrating AI Technologies</h3>
+                        <p data-i18n-html="certs.c1.meta"><span>Tuwaiq Academy x Misk</span> · 300 hours</p>
                     </div>
-                    <time class="cert__date mono">Oct 2026</time>
+                    <time class="cert__date mono" datetime="2026-10" data-i18n="certs.oct2026">Oct 2026</time>
                 </article>
                 <article class="cert reveal" style="--c:#34d399">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></div>
                     <div class="cert__body">
-                        <h3>Professional Accreditation: Software Engineer</h3>
-                        <p><span>Saudi Council of Engineers (SCE)</span></p>
+                        <h3 data-i18n="certs.c2.title">Professional Accreditation: Software Engineer</h3>
+                        <p data-i18n-html="certs.c2.meta"><span>Saudi Council of Engineers (SCE)</span></p>
                     </div>
                 </article>
                 <article class="cert reveal" style="--c:#fbbf24">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></div>
                     <div class="cert__body">
-                        <h3>Certified Business Professional in Project Management (CBP-PM)</h3>
+                        <h3 data-i18n="certs.c3.title">Certified Business Professional in Project Management (CBP-PM)</h3>
                         <p><span>IBTA</span></p>
                     </div>
                 </article>
                 <article class="cert reveal" style="--c:#22d3ee">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v5m0 0-6 5m6-5 6 5"/></svg></div>
                     <div class="cert__body">
-                        <h3>Cisco Certified Network Associate (CCNA) Routing and Switching</h3>
+                        <h3 data-i18n="certs.c4.title">Cisco Certified Network Associate (CCNA) Routing and Switching</h3>
                         <p><span>Cisco</span></p>
                     </div>
                 </article>
                 <article class="cert reveal" style="--c:#c084fc">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
                     <div class="cert__body">
-                        <h3>Software Engineering Summer Training</h3>
-                        <p><span>United Cement Industrial Company</span> · 200 hours</p>
+                        <h3 data-i18n="certs.c5.title">Software Engineering Summer Training</h3>
+                        <p data-i18n-html="certs.c5.meta"><span>United Cement Industrial Company</span> · 200 hours</p>
                     </div>
                 </article>
                 <article class="cert reveal" style="--c:#f472b6">
                     <div class="cert__icon"><svg viewBox="0 0 24 24" class="icon-stroke"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/></svg></div>
                     <div class="cert__body">
-                        <h3>3rd Place: Expo 2030 Riyadh Hackathon</h3>
-                        <p><span>Tuwaiq Academy x Misk</span> · Team leader</p>
+                        <h3 data-i18n="certs.c6.title">3rd Place: Expo 2030 Riyadh Hackathon</h3>
+                        <p data-i18n-html="certs.c6.meta"><span>Tuwaiq Academy x Misk</span> · Team leader</p>
                     </div>
-                    <time class="cert__date mono">Oct 2026</time>
+                    <time class="cert__date mono" datetime="2026-10" data-i18n="certs.oct2026">Oct 2026</time>
                 </article>
             </div>
         </div>
@@ -202,40 +215,40 @@
     <section class="section" id="contact">
         <div class="container">
             <header class="section-head reveal">
-                <p class="eyebrow mono">Contact</p>
-                <h2 class="section-title">Get in <span class="grad">touch</span></h2>
-                <p class="section-sub">Have a role, a project, or just want to say hi? My inbox is open.</p>
+                <p class="eyebrow mono" data-i18n="contact.eyebrow">Contact</p>
+                <h2 class="section-title" data-i18n-html="contact.title">Get in <span class="grad">touch</span></h2>
+                <p class="section-sub" data-i18n="contact.sub">Have a role, a project, or just want to say hi? My inbox is open.</p>
             </header>
 
             <form class="form reveal" id="contactForm" novalidate>
                 <div class="form__row">
                     <label class="field">
-                        <span>Name</span>
-                        <input type="text" name="senderName" maxlength="100" placeholder="Your name" required autocomplete="name">
+                        <span data-i18n="form.name">Name</span>
+                        <input type="text" name="senderName" maxlength="100" placeholder="Your name" data-i18n-attr="placeholder:form.name.ph" required autocomplete="name">
                         <small class="field__error" data-error-for="senderName"></small>
                     </label>
                     <label class="field">
-                        <span>Email</span>
-                        <input type="email" name="senderEmail" maxlength="150" placeholder="you@example.com" required autocomplete="email">
+                        <span data-i18n="form.email">Email</span>
+                        <input type="email" name="senderEmail" maxlength="150" placeholder="you@example.com" dir="ltr" required autocomplete="email">
                         <small class="field__error" data-error-for="senderEmail"></small>
                     </label>
                 </div>
                 <label class="field">
-                    <span>Subject</span>
-                    <input type="text" name="subject" maxlength="200" placeholder="What's this about?">
+                    <span data-i18n="form.subject">Subject</span>
+                    <input type="text" name="subject" maxlength="200" placeholder="What's this about?" data-i18n-attr="placeholder:form.subject.ph">
                     <small class="field__error" data-error-for="subject"></small>
                 </label>
                 <label class="field">
-                    <span>Message</span>
-                    <textarea name="message" rows="6" maxlength="5000" placeholder="Your message..." required></textarea>
+                    <span data-i18n="form.message">Message</span>
+                    <textarea name="message" rows="6" maxlength="5000" placeholder="Your message..." data-i18n-attr="placeholder:form.message.ph" required></textarea>
                     <small class="field__error" data-error-for="message"></small>
                 </label>
                 <!-- Honeypot: hidden from people, bots fill it in -->
                 <label class="hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
 
                 <button type="submit" class="btn btn--primary btn--block" id="contactSubmit">
-                    <span>Send Message</span>
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
+                    <span data-i18n="form.send">Send Message</span>
+                    <svg viewBox="0 0 24 24" aria-hidden="true" class="flip-rtl"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg>
                 </button>
                 <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
             </form>
@@ -245,15 +258,16 @@
 
 <footer class="footer">
     <div class="container footer__inner">
-        <p>© <span id="year"></span> Turki Alghamdi</p>
+        <p>© <span id="year"></span> <span data-i18n="hero.name">Turki Alghamdi</span></p>
         <div class="footer__links">
             <a href="https://github.com/gTurki" target="_blank" rel="noopener">GitHub</a>
             <a href="https://www.linkedin.com/in/turki-abdullah-alghamdi" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="mailto:kfupm.turki@gmail.com">Email</a>
+            <a href="mailto:kfupm.turki@gmail.com" data-i18n="footer.email">Email</a>
         </div>
     </div>
 </footer>
 
+<script src="js/i18n.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
