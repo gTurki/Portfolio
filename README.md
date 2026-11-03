@@ -306,6 +306,17 @@ Open **http://localhost:8080**. The `portfolio_db` database is created if it doe
 | `app.cors.allowed-origin` | `http://localhost:5173` | Extra origin allowed to call `/api/**` (the bundled UI doesn't need it) |
 | `app.seed-sample-data` | `true` | Seed projects and skills when the tables are empty |
 
+### ☁️ Deploying (Railway)
+
+The repo includes a `Dockerfile`, and the app reads its port (`PORT`) and database (`MYSQLHOST`, `MYSQLPORT`, `MYSQLDATABASE`, `MYSQLUSER`, `MYSQLPASSWORD`) from environment variables.
+
+1. **New Project → Deploy from GitHub repo** → pick this repo.
+2. **+ Create → Database → MySQL**.
+3. In the app's **Variables**, reference the database: `MYSQLHOST=${{MySQL.MYSQLHOST}}`, and the same for the other four.
+4. **Settings → Networking → Generate Domain**.
+
+Tables and seed data are created on the first start; every push to `main` redeploys.
+
 ## 🛠️ Managing Content
 
 Everything on the site except the About and Certifications text comes from the database. Use any SQL client (I use **DataGrip**):

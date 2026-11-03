@@ -1,0 +1,8 @@
+target/
+.idea/
+.claude/
+.git/
+docs/
+*.iml
+.mcp.json
+HELP.md
