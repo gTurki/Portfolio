@@ -13,6 +13,7 @@ A personal portfolio powered by a Spring Boot REST API and MySQL, with a hand-bu
 <br>
 
 <a href="https://turki-alghamdi.up.railway.app"><img src="https://img.shields.io/badge/🌐_Live_Site-turki--alghamdi.up.railway.app-22D3EE?style=for-the-badge" alt="Live site"></a>
+<a href="https://turki-alghamdi.up.railway.app/?lang=ar"><img src="https://img.shields.io/badge/🇸🇦_النسخة_العربية-Arabic-006C35?style=for-the-badge" alt="Arabic version"></a>
 
 <br><br>
 
@@ -37,7 +38,7 @@ A personal portfolio powered by a Spring Boot REST API and MySQL, with a hand-bu
 
 <br>
 
-**4 REST endpoints · 3 entities · 0 frontend dependencies · every card driven by the database**
+**4 REST endpoints · 3 entities · 2 languages (English · العربية) · 0 frontend dependencies · every card driven by the database**
 
 </div>
 
@@ -54,12 +55,16 @@ A personal portfolio powered by a Spring Boot REST API and MySQL, with a hand-bu
 <img src="docs/hero.jpg" width="49%" alt="Hero section"> <img src="docs/about.jpg" width="49%" alt="About section">
 <img src="docs/projects.jpg" width="49%" alt="Projects section"> <img src="docs/tech-stack.jpg" width="49%" alt="Tech stack section">
 
+<sub>🇸🇦 <b>The same site in Arabic</b>: one click on the flag button flips the whole layout right-to-left</sub><br><br>
+<img src="docs/ar-hero.jpg" width="49%" alt="Arabic hero section"> <img src="docs/ar-projects.jpg" width="49%" alt="Arabic projects section">
+
 </div>
 
 ## 📑 Table of Contents
 
 - [Featured Work](#-featured-work)
 - [Features](#-features)
+- [English & Arabic](#-english--arabic)
 - [How It Works](#-how-it-works)
 - [Architecture](#-architecture)
 - [Data Model](#-data-model)
@@ -115,6 +120,7 @@ The projects shown on the site, all built with Spring Boot during the Tuwaiq Aca
 - **Email notifications**: every new message is emailed to me via Brevo (see [below](#-email-notifications-brevo)).
 
 ### 🎨 Frontend
+- **Bilingual**: English by default, with a 🇸🇦 button for a full **Arabic, right-to-left** version (see [English & Arabic](#-english--arabic)).
 - Dark theme, **typing hero**, **scroll-spy** navigation, reveal-on-scroll animations, loading skeletons.
 - Fully **responsive** with a mobile menu; respects `prefers-reduced-motion`.
 - **Safe rendering**: all API text is HTML-escaped, and only `http(s)` links are rendered.
@@ -124,6 +130,23 @@ The projects shown on the site, all built with Spring Boot during the Tuwaiq Aca
 - Clean **controller → service → repository** layering, with Java **records** as DTOs.
 - One **global error format** via `@RestControllerAdvice`.
 - **Spring Security** configured for a public site; **CORS** via `@CrossOrigin` with a configurable origin.
+
+## 🌍 English & Arabic
+
+The site opens in **English**. A button in the top corner, **🇸🇦 العربية**, switches everything to **Arabic**, and turns into **🇬🇧 English** to switch back.
+
+| | What changes |
+|---|---|
+| ↔️ **Layout** | `<html dir="rtl">`: the menu, cards, form and "forward" arrows all mirror. CSS uses logical properties (`margin-inline-start`, `inset-inline-end`) so one stylesheet serves both directions. |
+| 🔤 **Typography** | Switches to **IBM Plex Sans Arabic** (Inter and JetBrains Mono have no Arabic glyphs), adds line height, and removes letter-spacing, which breaks Arabic letter joining. |
+| 📝 **Static text** | Nav, hero (with 4 Arabic typing phrases), About, stats, certifications, form labels and placeholders, page title and meta description. |
+| 🗄️ **Database content** | Projects and skills have optional Arabic columns (`title_ar`, `description_ar`, `name_ar`, `category_ar`). The UI falls back to English when one is empty; tech names like *Java* or *Docker* stay in English. |
+| 💬 **Form feedback** | Validation errors, success, network and rate-limit messages, including correct Arabic plural forms ("دقيقتين", "3 دقائق"). |
+| 💾 **Remembered** | The choice is saved per visitor, and `?lang=ar` opens the site directly in Arabic: [turki-alghamdi.up.railway.app/?lang=ar](https://turki-alghamdi.up.railway.app/?lang=ar) |
+
+**How it's built:** English stays in `index.html` (good for SEO and visitors without JavaScript). Elements are tagged with `data-i18n` / `data-i18n-html` / `data-i18n-attr`; on load, [`i18n.js`](src/main/resources/static/js/i18n.js) remembers each element's English content, so only an **Arabic dictionary** is needed, and switching back simply restores the originals. Projects and skills re-render from data already loaded, so switching is instant, with no reload. A tiny inline script sets `dir="rtl"` before the first paint, so returning Arabic visitors never see the page flash left-to-right.
+
+On startup, `ArabicContentBackfill` fills in Arabic text for the seeded projects and skills, **only where the Arabic columns are still empty**, so it upgraded the existing production database automatically and never overwrites edits made in DataGrip.
 
 ## 🔁 How It Works
 
@@ -179,7 +202,9 @@ direction LR
 class Project {
   Long id
   String title
+  String titleAr
   String description
+  String descriptionAr
   String techStack
   String sourceCodeUrl
   String liveDemoUrl
@@ -190,7 +215,9 @@ class Project {
 class Skill {
   Long id
   String name
+  String nameAr
   String category
+  String categoryAr
   Integer proficiencyLevel
 }
 class ContactMessage {
@@ -205,8 +232,8 @@ class ContactMessage {
 
 | Table | Notes |
 |---|---|
-| `projects` | `tech_stack` is stored comma-separated and returned as a JSON array. `created_at` is set automatically. |
-| `skills` | Grouped by `category` in the UI; categories appear in the order their first skill was inserted. |
+| `projects` | `tech_stack` is stored comma-separated and returned as a JSON array. `created_at` is set automatically. `title_ar` / `description_ar` are optional Arabic versions. |
+| `skills` | Grouped by `category` in the UI; categories appear in the order their first skill was inserted. `name_ar` / `category_ar` are optional Arabic labels. |
 | `contact_messages` | `sent_at` is set automatically. |
 
 ## 📊 API
@@ -232,7 +259,9 @@ All endpoints return JSON.
   {
     "id": 2,
     "title": "Rifd: AI Operations Center for Expo 2030",
+    "titleAr": "رِفد: مركز عمليات ذكي لإكسبو 2030",
     "description": "3rd place at the Expo 2030 Riyadh Hackathon as team leader of 5. …",
+    "descriptionAr": "المركز الثالث في هاكاثون إكسبو 2030 الرياض بصفتي قائدًا لفريق من 5 أعضاء. …",
     "techStack": ["Java", "Spring Boot", "JPA", "MySQL", "Spring Security (JWT)", "WebSocket (STOMP)"],
     "sourceCodeUrl": "https://github.com/gTurki/Rifd",
     "liveDemoUrl": "https://rifd-frontend.vercel.app",
@@ -289,6 +318,8 @@ Portfolio
 │       ├── index.html
 │       ├── css/       # styles.css
 │       ├── js/        # app.js: fetch, rendering, typing hero, contact form
+│       │              # i18n.js: Arabic dictionary + language switching
+│       ├── img/flags/ # 🇸🇦 🇬🇧 language button flags (flag-icons, MIT)
 │       └── files/     # CV, profile photo, projects/ logos
 └── docs             # README screenshots
 ```
@@ -344,6 +375,9 @@ Everything on the site except the About and Certifications text comes from the d
 | Add a project | Insert a row into `projects`; set `featured = 1` for the badge |
 | Add a cover | Put an image in `static/files/projects/` and set `image_url`, e.g. `files/projects/rifd.png` |
 | Add a skill | Insert into `skills` with a `category` (new categories get a new card) |
+| Translate a project | Fill `title_ar` and `description_ar` (empty = English is shown in Arabic mode) |
+| Translate a skill | Fill `category_ar`, and `name_ar` only if the name should change in Arabic |
+| Change page text | Edit the Arabic dictionary in `static/js/i18n.js`; English lives in `index.html` |
 | Read messages | `SELECT * FROM contact_messages ORDER BY sent_at DESC;` |
 
 ## 👋 About Me
