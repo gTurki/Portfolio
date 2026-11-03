@@ -155,14 +155,14 @@ sequenceDiagram
 
 ```mermaid
 flowchart LR
-    UI[🌐 Static SPA<br/>HTML · CSS · JS] -- fetch JSON --> SEC[Spring Security<br/>public · CSRF off for /api]
-    SEC --> C[Controllers<br/>@RestController · @CrossOrigin]
-    C --> V{Bean Validation}
-    V -- invalid --> ADV[GlobalExceptionHandler<br/>ApiError]
-    V -- valid --> SV[Services]
-    SV --> R[Spring Data JPA<br/>Repositories]
-    R --> DB[(MySQL<br/>portfolio_db)]
-    INIT[DataInitializer<br/>seed on first run] -.-> R
+    UI["🌐 Static SPA<br/>HTML · CSS · JS"] -- fetch JSON --> SEC["Spring Security<br/>public · CSRF off for /api"]
+    SEC --> C["Controllers<br/>#64;RestController · #64;CrossOrigin"]
+    C --> V{"Bean Validation"}
+    V -- invalid --> ADV["GlobalExceptionHandler<br/>ApiError"]
+    V -- valid --> SV["Services"]
+    SV --> R["Spring Data JPA<br/>Repositories"]
+    R --> DB[("MySQL<br/>portfolio_db")]
+    INIT["DataInitializer<br/>seed on first run"] -.-> R
 ```
 
 ## 🗄️ Data Model
