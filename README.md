@@ -321,6 +321,18 @@ The repo includes a `Dockerfile`, and the app reads its port (`PORT`) and databa
 
 Tables and seed data are created on the first start; every push to `main` redeploys.
 
+### 📧 Email notifications (Brevo)
+
+Every new contact message is also emailed to me through [Brevo](https://www.brevo.com)'s HTTPS API (which works on hosts that block SMTP). Sending happens in the background **after** the message is saved, so a slow or failing email never affects the visitor. Hitting *Reply* in the email answers the visitor directly.
+
+| Variable | Description |
+|---|---|
+| `BREVO_API_KEY` | Brevo API key (**SMTP & API → API Keys**) |
+| `BREVO_SENDER_EMAIL` | A sender verified in Brevo (**Senders, Domains & Dedicated IPs**) |
+| `NOTIFY_EMAIL` | Where notifications go (defaults to my Gmail) |
+
+Without `BREVO_API_KEY` and `BREVO_SENDER_EMAIL`, notifications are simply turned off.
+
 ## 🛠️ Managing Content
 
 Everything on the site except the About and Certifications text comes from the database. Use any SQL client (I use **DataGrip**):

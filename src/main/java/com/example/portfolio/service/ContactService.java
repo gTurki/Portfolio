@@ -3,9 +3,11 @@ package com.example.portfolio.service;
 import com.example.portfolio.dto.ContactMessageRequest;
 import com.example.portfolio.dto.ContactMessageResponse;
 import com.example.portfolio.entity.ContactMessage;
+import com.example.portfolio.notification.ContactMessageReceivedEvent;
 import com.example.portfolio.repository.ContactMessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ContactService {
 
     private final ContactMessageRepository contactMessageRepository;
+    private final ApplicationEventPublisher events;
 
     @Transactional
     public ContactMessageResponse save(ContactMessageRequest request) {
@@ -31,6 +34,8 @@ public class ContactService {
                 .message(request.message().trim())
                 .build());
         log.info("New contact message #{} from {}", saved.getId(), saved.getSenderEmail());
+        // Email notification is sent after this transaction commits (see BrevoEmailNotifier)
+        events.publishEvent(ContactMessageReceivedEvent.from(saved));
         return ContactMessageResponse.from(saved);
     }
 }
