@@ -141,7 +141,7 @@ The site opens in **English**. A button in the top corner, **🇸🇦 العرب
 | 🔤 **Typography** | Switches to **IBM Plex Sans Arabic** (Inter and JetBrains Mono have no Arabic glyphs), adds line height, and removes letter-spacing, which breaks Arabic letter joining. |
 | 📝 **Static text** | Nav, hero (with 4 Arabic typing phrases), About, stats, certifications, form labels and placeholders, page title and meta description. |
 | 🗄️ **Database content** | Projects and skills have optional Arabic columns (`title_ar`, `description_ar`, `name_ar`, `category_ar`). The UI falls back to English when one is empty; tech names like *Java* or *Docker* stay in English. |
-| 💬 **Form feedback** | Validation errors, success, network and rate-limit messages, including correct Arabic plural forms ("دقيقتين", "3 دقائق"). |
+| 💬 **Form feedback** | Validation errors, success, network and rate-limit messages, including correct Arabic plural forms (e.g. <i>دقيقتين</i> for 2 minutes). |
 | 💾 **Remembered** | The choice is saved per visitor, and `?lang=ar` opens the site directly in Arabic: [turki-alghamdi.up.railway.app/?lang=ar](https://turki-alghamdi.up.railway.app/?lang=ar) |
 
 **How it's built:** English stays in `index.html` (good for SEO and visitors without JavaScript). Elements are tagged with `data-i18n` / `data-i18n-html` / `data-i18n-attr`; on load, [`i18n.js`](src/main/resources/static/js/i18n.js) remembers each element's English content, so only an **Arabic dictionary** is needed, and switching back simply restores the originals. Projects and skills re-render from data already loaded, so switching is instant, with no reload. A tiny inline script sets `dir="rtl"` before the first paint, so returning Arabic visitors never see the page flash left-to-right.
